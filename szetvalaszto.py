@@ -63,7 +63,7 @@ def main(data_path, outputname, maxnumber, vege, number_users, korokszama):
 
 
     #Statisztikai kiértékelő meghívása
-    #kiertekelo(number_users)
+    kiertekelo(number_users)
 
 
 
