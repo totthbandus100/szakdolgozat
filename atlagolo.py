@@ -4,8 +4,8 @@ from callshaples import call_shapleys
 
 #Felnyitja az összes szétválasztott teszt eredményeket tartalmazó filet és a benne található eredményeket a binárisok szerint átlagolja
 #Majd az átlagolt értékekre meghívja a shapley értékszámolót
-def atlagolo(path, number, kornumber):
-    for i in range(number):
+def atlagolo(path, number_users, kornumber):
+    for i in range(2**number_users-1):
         file_path=path+str(i)+".txt"
         fp=open(file_path, 'r')
         line=fp.readline()
@@ -33,7 +33,7 @@ def atlagolo(path, number, kornumber):
             values[j]=[values[j][0]/kornumber]
 
         last_binary=""
-        for k in range(int(math.log(len(values)+1,2))):
+        for k in range(number_users):
             last_binary+="1"
             last_binary+=" "
         binaries.append(last_binary)
@@ -43,6 +43,7 @@ def atlagolo(path, number, kornumber):
         open(ki_path,"w").close()
         f=open(ki_path,"w")
         for i in range(len(values)):
+            print(binaries)
             f.write(binaries[i])
             f.write("= ")
             f.write("0 ")
@@ -51,5 +52,5 @@ def atlagolo(path, number, kornumber):
             f.write("\n")
         f.close()
     #Shapley érték számítások meghívásai
-    call_shapleys(number)
+    call_shapleys(number_users)
 

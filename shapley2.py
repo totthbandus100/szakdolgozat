@@ -3,19 +3,18 @@ import math
 
 
 
-def osszegez(adatok, melyikelem,hanyadiknaklepbe, melyiket):
+def osszegez(adatok,hanyadiknaklepbe, melyiket):
     osszeg=0;
     for i in adatok:
-        if i[0][melyikelem]==0 and i[2]==hanyadiknaklepbe:
-            ellentett=ellentettErteke(adatok,i,melyikelem)
+
+        if i[0][melyiket]==0 and i[2]==hanyadiknaklepbe:
+            ellentett=ellentettErteke(adatok,i,melyiket)
             if ellentett == None:
-                ellentett=[[1,1,1,1,1],[0],0]
+                ellentett=[[1,1],[0],0]
             if ellentett[2]==hanyadiknaklepbe-1:
+
                 hozzaadni=i[1][melyiket]-ellentett[1][melyiket]
-                '''if hozzaadni<0:
-                    osszeg+=0;
-                else:
-                    osszeg+=hozzaadni'''
+
                 osszeg+=hozzaadni
     return osszeg
 
@@ -50,7 +49,7 @@ def ellentettErteke(adatok, minek,hanyadikelem):
         if osszehasonlito(i[0],minek[0],hanyadikelem):
             return i
 
-def main(eredmenyek_path, out_path, n, label):
+def main(eredmenyek_path, out_path,number_users , label):
     melyiket=0
     adatok=[]
     ossz=0
@@ -87,13 +86,12 @@ def main(eredmenyek_path, out_path, n, label):
                 suly+=1
         i.append(suly)
 
-    for i in range(0,n):
-        shapley=0
-        for hanyadiknaklepbe in range(1,n+1):
 
-            osszeg=osszegez(adatok, i,hanyadiknaklepbe, melyiket)
-            shapley+=szorzo(n,hanyadiknaklepbe)*osszeg
-        #f.write("{:.3f}".format(shapley))
+    for i in range(0,number_users):
+        shapley=0
+        for hanyadiknaklepbe in range(1,number_users+1):
+            osszeg=osszegez(adatok, hanyadiknaklepbe, melyiket)
+            shapley+=szorzo(number_users,hanyadiknaklepbe)*osszeg
         f.write("{:.3f}".format(shapley))
         f.write(" ")
 
@@ -102,9 +100,3 @@ def main(eredmenyek_path, out_path, n, label):
     f.write('\n')
     f.close()
     fp.close()
-
-
-
-
-
-

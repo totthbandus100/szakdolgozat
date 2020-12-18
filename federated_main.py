@@ -94,7 +94,8 @@ def main():
     fp.close()
 
 
-    for epoch in tqdm(range(args.epochs)):
+    #for epoch in tqdm(range(args.epochs)):
+    for epoch in range(args.epochs):
         local_weights, local_losses = [], []
         #print(f'\n | Global Training Round : {epoch+1} |\n')
 

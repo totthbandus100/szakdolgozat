@@ -6,6 +6,8 @@ def statisztikus(number_users,values, vegso_etalon_atlaghoz_osszeg, vegso_konsze
     osszegek=[]
     for i in range(number_users):
         osszegek.append(0)
+    print(values)
+    print(osszegek)
     for i in range(1, len(values)):
         for j in range(0,len(values[i])):
             osszegek[j]=osszegek[j]+values[i][j]
@@ -33,7 +35,10 @@ def statisztikus(number_users,values, vegso_etalon_atlaghoz_osszeg, vegso_konsze
 
     konszenzusszazalekok=[]
     for i in range(len(osszegek)):
-        konszenzusszazalekok.append(osszegek[i]*100/konszenzusosszeg)
+        if(konszenzusosszeg) ==0:
+            konszenzusszazalekok.append(0)
+        else:
+            konszenzusszazalekok.append(osszegek[i]*100/konszenzusosszeg)
         vegso_konszenzus_atlaghoz_osszeg[i]=vegso_konszenzus_atlaghoz_osszeg[i]+osszegek[i]
 
 
@@ -85,7 +90,7 @@ def kiertekelo(number_users):
     while line!="":
         if line=="\n":
             #Az egyes futások eredménye enterrel van elválasztva, ha entert talál, az éppen beolvasott eredményeket hozzáadja a meglévőkhöz
-            max_szazalekos_elteres_lefele, max_szazalekos_elteres_felfele=statisztikus(values,vegso_etalon_atlaghoz_osszeg,vegso_konszenzus_atlaghoz_osszeg, max_szazalekos_elteres_lefele,max_szazalekos_elteres_felfele, sorrendcsere_szazalekos_elteres,osszes_etalon_Shapley_erteke,osszes_konszenzus_Shapley_erteke)
+            max_szazalekos_elteres_lefele, max_szazalekos_elteres_felfele=statisztikus(number_users,values,vegso_etalon_atlaghoz_osszeg,vegso_konszenzus_atlaghoz_osszeg, max_szazalekos_elteres_lefele,max_szazalekos_elteres_felfele, sorrendcsere_szazalekos_elteres,osszes_etalon_Shapley_erteke,osszes_konszenzus_Shapley_erteke)
             futasokszama+=1
             values=[]
             line=fp.readline()
@@ -108,14 +113,16 @@ def kiertekelo(number_users):
 
     #Százalékos eltérések kiszámolása
     vegso_szazalekos_elteresek=[]
-    for i in range(0,len(vegso_konszenzus_atlag)):
-        vegso_szazalekos_elteresek.append(100*(vegso_etalon_atlag[i]/sum(vegso_etalon_atlag)-vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag)))
+    if(sum(vegso_konszenzus_atlag)!=0 and sum(vegso_etalon_atlag!=0)):
+        for i in range(0,len(vegso_konszenzus_atlag)):
+            vegso_szazalekos_elteresek.append(100*(vegso_etalon_atlag[i]/sum(vegso_etalon_atlag)-vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag)))
 
     etalon_szazalekok=[]
     konszenzus_szazalekok=[]
-    for i in range(len(vegso_konszenzus_atlag)):
-        etalon_szazalekok.append(100*vegso_etalon_atlag[i]/sum(vegso_etalon_atlag))
-        konszenzus_szazalekok.append(100*vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag))
+    if(sum(vegso_konszenzus_atlag)!=0 and sum(vegso_etalon_atlag!=0)):
+        for i in range(len(vegso_konszenzus_atlag)):
+            etalon_szazalekok.append(100*vegso_etalon_atlag[i]/sum(vegso_etalon_atlag))
+            konszenzus_szazalekok.append(100*vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag))
 
     #Eredmények kiírása
     print("ETALON SZAZALEKOK")
@@ -138,22 +145,26 @@ def kiertekelo(number_users):
 
 
     #Fileokba kiírja hogy körönként a könszenzus és az etalon miket gondoltak a résztvevőkről.
-    open('etalon.txt',"w").close()
-    etalon_file=open('etalon.txt',"w")
-    open('konszenzus.txt',"w").close()
-    konszenzus_file=open('konszenzus.txt',"w")
+    open('etalon010145.txt',"w").close()
+    etalon_file=open('etalon010145.txt',"w")
+    open('konszenzus010145.txt',"w").close()
+    konszenzus_file=open('konszenzus010145.txt',"w")
     for i in range(len(osszes_konszenzus_Shapley_erteke)):
         osszkonszenzus=sum(osszes_konszenzus_Shapley_erteke[i])
         osszetalon=sum(osszes_etalon_Shapley_erteke[i])
         for j in range(len(osszes_konszenzus_Shapley_erteke[0])):
-            etalon_file.write(str(100*osszes_etalon_Shapley_erteke[i][j]/osszetalon))
+            if osszetalon!=0:
+                etalon_file.write(str(100*osszes_etalon_Shapley_erteke[i][j]/osszetalon))
+            else:
+                etalon_file.write('0')
             etalon_file.write('\t')
-            konszenzus_file.write(str(100*osszes_konszenzus_Shapley_erteke[i][j]/osszkonszenzus))
+            if osszkonszenzus!=0:
+                konszenzus_file.write(str(100*osszes_konszenzus_Shapley_erteke[i][j]/osszkonszenzus))
+            else:
+                konszenzus_file.write('0')
             konszenzus_file.write('\t')
         konszenzus_file.write('\n')
         etalon_file.write('\n')
     konszenzus_file.close()
     etalon_file.close()
     print()
-
-

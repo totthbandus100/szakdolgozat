@@ -46,10 +46,11 @@ def main():
         print(tesztekszama)
     print("VEGE")
 
+
     open('kiertekeles.txt', 'w').close()
     sys.stdout=open('kiertekeles.txt','w')
     #Szétválasztja a teszt eredményeket, majd a szétválasztottakon meghívja az átlagolást, a Shapley érték számítást és a statisztikai kiértékelőt
-    szetvalaszto.main('kimenet.txt','eredmenyek/szetvalasztott',(2**resztvevokszama)-1,"VEGE\n",resztvevokszama)
+    szetvalaszto.main('kimenet.txt','eredmenyek/szetvalasztott',(2**resztvevokszama)-1,"VEGE\n",resztvevokszama, dbteszt)
 
 
 if __name__ == "__main__":

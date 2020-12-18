@@ -18,7 +18,7 @@ def numberToBinary(number, lenght):
 
 def main(data_path, outputname, maxnumber, vege, number_users, korokszama):
     #Törli az előző eredményeket
-    open('eredmenyek.txt', 'w').close()
+
     for i in range(maxnumber+1):
         out_path=outputname+str(i)+".txt"
         open(out_path, 'w').close()
@@ -59,11 +59,11 @@ def main(data_path, outputname, maxnumber, vege, number_users, korokszama):
     fp.close()
 
     #Átlagolja a teszt eredményeket, az átlagoló meghívja a shapley érték számításokat
-    atlagolo(outputname,maxnumber,korokszama)
+    atlagolo(outputname,number_users,korokszama)
 
 
     #Statisztikai kiértékelő meghívása
-    kiertekelo(number_users)
+    #kiertekelo(number_users)
 
 
 
