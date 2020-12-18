@@ -11,11 +11,11 @@ def osszegez(adatok,hanyadiknaklepbe, melyiket):
             ellentett=ellentettErteke(adatok,i,melyiket)
             if ellentett == None:
                 ellentett=[[1,1],[0],0]
-            if ellentett[2]==hanyadiknaklepbe-1:
 
-                hozzaadni=i[1][melyiket]-ellentett[1][melyiket]
 
-                osszeg+=hozzaadni
+            hozzaadni=i[1][melyiket]-ellentett[1][melyiket]
+
+            osszeg+=hozzaadni
     return osszeg
 
 
