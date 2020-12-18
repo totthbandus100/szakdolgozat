@@ -113,16 +113,14 @@ def kiertekelo(number_users):
 
     #Százalékos eltérések kiszámolása
     vegso_szazalekos_elteresek=[]
-    if(sum(vegso_konszenzus_atlag)!=0 and sum(vegso_etalon_atlag!=0)):
-        for i in range(0,len(vegso_konszenzus_atlag)):
-            vegso_szazalekos_elteresek.append(100*(vegso_etalon_atlag[i]/sum(vegso_etalon_atlag)-vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag)))
+    for i in range(0,len(vegso_konszenzus_atlag)):
+        vegso_szazalekos_elteresek.append(100*(vegso_etalon_atlag[i]/sum(vegso_etalon_atlag)-vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag)))
 
     etalon_szazalekok=[]
     konszenzus_szazalekok=[]
-    if(sum(vegso_konszenzus_atlag)!=0 and sum(vegso_etalon_atlag!=0)):
-        for i in range(len(vegso_konszenzus_atlag)):
-            etalon_szazalekok.append(100*vegso_etalon_atlag[i]/sum(vegso_etalon_atlag))
-            konszenzus_szazalekok.append(100*vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag))
+    for i in range(len(vegso_konszenzus_atlag)):
+        etalon_szazalekok.append(100*vegso_etalon_atlag[i]/sum(vegso_etalon_atlag))
+        konszenzus_szazalekok.append(100*vegso_konszenzus_atlag[i]/sum(vegso_konszenzus_atlag))
 
     #Eredmények kiírása
     print("ETALON SZAZALEKOK")
@@ -168,3 +166,4 @@ def kiertekelo(number_users):
     konszenzus_file.close()
     etalon_file.close()
     print()
+
