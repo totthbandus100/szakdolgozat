@@ -1,13 +1,42 @@
-A kísérletet a vezerlo.py futtatásával lehet elvégezni.
-A kísérlet csak MNIST Non-iid mpl beállításokkal lehet elvégezni.
+MNIST dataseten non-iid elosztású federált tanulás elosztott kiértékelésére alkotott teszt környezet.
+Alapul szolgáló federált tanulási környezet: https://github.com/AshwinRJ/Federated-Learning-PyTorch
+
+Követelmények a kísérlethez:
+    Python3
+    Pytorch
+    Torchvision
+
 
 A kísérlet beállításaihoz:
-	Vezérlő.py-ban megadni a résztvevők számát és hogy hányszor szeretné a kísérletet elvégezni. A résztvevők számát be kell állítani az options.py-ban is!
-traindataset.txt-ben megadni minden sorban, hogy az adott résztvevőhöz milyen labelek tartoznak. 	Egy sor sem maradhat üresen! Ha kevesebb résztvevővel akarja futtatni akkor a vezérlő.pyban kell a számukat csökkenteni.
+	options.py-ban megadni: epochs: szabadon választható pozitív egész szám
+	                        num_users: szabadon választható pozitív egész szám
+	                        model: kötelezően: mlp
+	                        dataset: kötelezően: mnist
+	                        iid: kötelezően: 0
+
+    vezerlo.py-ban megadni: resztvevokszama: ugyanannyinak kell lennie mint az options.py-ban a num_users értéke
+                            dbteszt: szabadon választható pozitív egész, megadja, hogy hányszor szeretnénk a kísérletet elvégezni
+
+    traindataset.txt: soronként megadni, hogy a résztvevők milyen cimkével ellátott képekkel rendelkeznek.
 
 
-A Shapley értékeket az eredmenyek.txt-ben kapja meg.
-Statisztikai adatokat a kiertekeles.txt-ben láthatja
-A kísérletenkénti shapley eredmények is megtekinthetőek az etalon.txt és a konszenzus.txt fileokban.
-A kísérlet minden kimenete végigkövethető a kimenet.txt-ben
+
+A kísérlet futtatása:
+    A beállítások elvégzése után az alábbi parancs kiadása a forrás filok mappájában: python vezerlo.py
+
+
+
+
+A kísérlet kimenetelei:
+    eredmények.txt: A résztvevők Shaplyes értékeik a teszt koalíciók alapján.
+    kiertekeles.txt: Statisztikai adatok a kísérletekről.
+    etalon.txt, konszenzus.txt: Kísérletenként a résztvevők Shapley értékei.
+    kimenet.txt: Az összes kísérlet kimenete és minden teszteredmény. Végig lehet vele követni a teljes kísérletet.
+
+
+
+
+
+
+
 

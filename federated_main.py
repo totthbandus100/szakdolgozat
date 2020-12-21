@@ -85,12 +85,12 @@ def main():
     val_loss_pre, counter = 0, 0
 
     #Beolvassuk, hogy éppen mely résztvevők vesznek részt a tanításban (0 jelentése, hogy benne van, 1 az hogy nincs)
-    resztvevok=[]
-    fp=open('resztvevok.txt',"r")
+    users=[]
+    fp=open('users.txt', "r")
     x=fp.readline().split(' ')
     for i in x:
         if i !='':
-            resztvevok.append(int(i))
+            users.append(int(i))
     fp.close()
 
 
@@ -146,19 +146,19 @@ def main():
     line=ftrain.readline()
     while line!="":
         sor=line.split(' ')
-        tomb=[]
+        array=[]
         for i in sor:
-            tomb.append(int(i))
-        testlabels.append(tomb)
+            array.append(int(i))
+        testlabels.append(array)
         line=ftrain.readline()
     ftrain.close()
 
-    print("KINEK MI")
+    print("USERS LABELS")
     print(testlabels)
 
     #Minden lehetséges koalícióra lefut a tesztelés
     for j in range((2**args.num_users)-1):
-        binary =numberToBinary(j,len(resztvevok))
+        binary =numberToBinary(j,len(users))
 
 
 
@@ -166,7 +166,7 @@ def main():
 
         #Teszt eredmények kiírása
         print("RESZTVEVOK")
-        print(resztvevok)
+        print(users)
         print("TEST NUMBER")
         print(j)
         print("TEST BINARY")

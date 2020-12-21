@@ -40,18 +40,18 @@ def mnist_noniid(dataset, num_users):
     num_shards, num_imgs = 200, 300
 
     #Betöltjük a résztveveőket és megszámoljuk hányan vannak
-    resztvevok=[]
-    fp=open('resztvevok.txt', "r")
+    users=[]
+    fp=open('users.txt', "r")
     x=fp.readline().split(' ')
     for i in x:
         if i !='':
-            resztvevok.append(int(i))
+            users.append(int(i))
     fp.close()
 
-    db_resztvevo=0
-    for i in resztvevok:
+    users_in_the_group=0
+    for i in users:
         if i==0:
-            db_resztvevo+=1
+            users_in_the_group+=1
 
 
 
@@ -59,7 +59,7 @@ def mnist_noniid(dataset, num_users):
 
 
     #csak a résztvevők számának megfelelő méretű adathalmazt veszünk fel
-    dict_users = {i: np.array([]) for i in range(db_resztvevo)}
+    dict_users = {i: np.array([]) for i in range(users_in_the_group)}
 
 
     idxs = np.arange(num_shards*num_imgs)
@@ -78,35 +78,35 @@ def mnist_noniid(dataset, num_users):
 
 
     #Megnézzük, hogy a labelek milyen index határok között mozognak
-    index_hatarok=[0]
-    labeltipus=0
+    index_borders=[0]
+    label_type=0
     for i in range(len(label_idxs)):
-        if label_idxs[i]!=labeltipus:
-            index_hatarok.append(i)
-            labeltipus+=1
-    index_hatarok.append(len(label_idxs))
+        if label_idxs[i]!=label_type:
+            index_borders.append(i)
+            label_type+=1
+    index_borders.append(len(label_idxs))
 
     #Betöltjük, hogy melyik résztvevőnek mely labelekre van szüksége
     f=open('traindataset.txt')
-    kinekmi=[]
+    users_labels=[]
     for i in range(num_users):
         sor=f.readline().split(' ')
-        tomb=[]
+        array=[]
         for i in sor:
-            tomb.append(int(i))
-        kinekmi.append(tomb)
+            array.append(int(i))
+        users_labels.append(array)
     f.close()
 
 
     #Végigmegyünk a résztveveőkön és megnézzük kinek milyen labelek jutottak, majd az adott label index határain belül sorsolunk neki egy tartományt
-    hanyadiknakadunk=0
+    which_user_get_data=0
     for i in range(num_users):
-        if resztvevok[i]!=1:
-            num_images_for_user_i=int(num_imgs*2/len(kinekmi[i]))
-            for j in range(len(kinekmi[i])):
-                valasztott_kezdoindex=random.randrange(index_hatarok[kinekmi[i][j]],index_hatarok[kinekmi[i][j]+1]-num_images_for_user_i)
-                dict_users[hanyadiknakadunk] = np.concatenate((dict_users[hanyadiknakadunk], idxs[valasztott_kezdoindex:valasztott_kezdoindex+num_images_for_user_i]), axis=0)
-            hanyadiknakadunk+=1
+        if users[i]!=1:
+            num_images_for_user_i=int(num_imgs*2/len(users_labels[i]))
+            for j in range(len(users_labels[i])):
+                start_index=random.randrange(index_borders[users_labels[i][j]],index_borders[users_labels[i][j]+1]-num_images_for_user_i)
+                dict_users[which_user_get_data] = np.concatenate((dict_users[which_user_get_data], idxs[start_index:start_index+num_images_for_user_i]), axis=0)
+            which_user_get_data+=1
     return dict_users
 
 
